@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Sisesta faili nimi: "
+read failinimi
+
+for i in `more $failinimi`
+do
+sh ./lisa_kasutaja $i
+echo $i
+done
+
