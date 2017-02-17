@@ -1,0 +1,4 @@
+#!/bin/bash
+kasutajanimi=$1
+useradd -m -s /bin/bash $kasutajanimi
+echo "Kasutaja $kasutajanimi on loodud."
