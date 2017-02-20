@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Sisesta kasutajate faili nimi: "
+read kasutajad
+
+echo "Sisesta paroolide faili nimi: "
+read paroolid
+
+failinimi1=`paste -d: $kasutajad $paroolid`
+
+for i in $failinimi1
+do
+
+kasutaja=`echo $i | cut -d \: -f 1`
+parool=`echo $i | cut -d \: -f 2`
+sh ./lisa_kasutaja $kasutaja
+echo $kasutaja:$parool | chpasswd
+echo "loodud" $kasutaja "parooliga" $parool
+done
