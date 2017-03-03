@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for kasutaja in $(ls /home)
+do
+	if [ ! -f /home/$kasutaja/.my.cnf ]; then
+		sh lisa_db $kasutaja
+		echo "Loon kasutaja "$kasutaja ".my.conf faili"
+	else
+		echo "Kasutaja" $kasutaja "konfiguratsioon juba eksisteerib"
+	fi
+done
