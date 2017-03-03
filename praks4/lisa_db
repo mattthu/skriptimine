@@ -1,0 +1,15 @@
+#!/bin/bash
+
+kasutaja=$1
+parool=$(openssl rand -hex 8)
+
+mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "CREATE DATABASE ${kasutaja}"
+mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "CREATE USER ${kasutaja}@localhost IDENTIFIED BY '${parool}';"
+mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "GRANT ALL PRIVILEGES ON ${kasutaja}.* TO '${kasutaja}'@'localhost';"
+mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "FLUSH PRIVILEGES;"
+
+touch /home/$kasutaja/.my.cnf
+echo "[client]
+user = $kasutaja
+password = $parool
+host = localhost" > /home/$kasutaja/.my.cnf
