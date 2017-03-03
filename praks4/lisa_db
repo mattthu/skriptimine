@@ -1,15 +1,11 @@
 #!/bin/bash
-
-kasutaja=$1
+#
+echo "Sisesta kasutajanimi"
+read kasutaja
+andmebaas=$kasutaja'_andmebaas'
 parool=$(openssl rand -hex 8)
-
-mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "CREATE DATABASE ${kasutaja}"
-mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "CREATE USER ${kasutaja}@localhost IDENTIFIED BY '${parool}';"
-mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "GRANT ALL PRIVILEGES ON ${kasutaja}.* TO '${kasutaja}'@'localhost';"
-mysql --user=debian-sys-maint --password=MwaQQGvc8UJYBYsb -e "FLUSH PRIVILEGES;"
-
-touch /home/$kasutaja/.my.cnf
-echo "[client]
-user = $kasutaja
-password = $parool
-host = localhost" > /home/$kasutaja/.my.cnf
+mycnf=/home/$kasutaja/.my.cnf
+#
+	mysql --user=root --password=qwerty -e "create user '$kasutaja' identified by '$parool';create database $andmebaas; use $andmebaas; grant all privileges on $andmebaas.* to $kasutaja;"
+		echo -e "[client]\nuser=$kasutaja\npassword=$parool" > $mycnf
+       			chmod 751 $mycnf
